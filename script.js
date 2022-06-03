@@ -10,18 +10,11 @@ arrowBack = wrapper.querySelector("header i");
 let api;
 
 inputField.addEventListener("keyup", e =>{
-    
-    if(e.key == "Enter" && inputField.value != ""){
-        requestApi(inputField.value);
-    }
+    if(e.key == "Enter" && inputField.value != "") requestApi(inputField.value);
 });
 
 locationBtn.addEventListener("click", () =>{
-    if(navigator.geolocation){ 
-        navigator.geolocation.getCurrentPosition(onSuccess, onError);
-    }else{
-        alert("Seu navegador não suporta api de geolocalização");
-    }
+    navigator.geolocation ? navigator.geolocation.getCurrentPosition(onSuccess, onError) : alert("Seu navegador não suporta api de geolocalização");
 });
 
 function requestApi(city){
@@ -61,21 +54,12 @@ function weatherDetails(info){
         const {description, id} = info.weather[0];
         const {temp, feels_like, humidity} = info.main;
 
-        
-        if(id == 800){
-            wIcon.src = "icones/limpo.svg";
-        }else if(id >= 200 && id <= 232){
-            wIcon.src = "icones/tempestade.svg";  
-        }else if(id >= 600 && id <= 622){
-            wIcon.src = "icones/neve.svg";
-        }else if(id >= 701 && id <= 781){
-            wIcon.src = "icones/nevoeiro.svg";
-        }else if(id >= 801 && id <= 804){
-            wIcon.src = "icones/nuvem.svg";
-        }else if((id >= 500 && id <= 531) || (id >= 300 && id <= 321)){
-            wIcon.src = "icones/chuva.svg";
-        }
-        
+        if(id == 800) wIcon.src = "icones/limpo.svg";
+        if(id >= 200 && id <= 232) wIcon.src = "icones/tempestade.svg";  
+        if(id >= 600 && id <= 622) wIcon.src = "icones/neve.svg";
+        if(id >= 701 && id <= 781) wIcon.src = "icones/nevoeiro.svg";
+        if(id >= 801 && id <= 804) wIcon.src = "icones/nuvem.svg";
+        if((id >= 500 && id <= 531) || (id >= 300 && id <= 321)) wIcon.src = "icones/chuva.svg";
         
         weatherPart.querySelector(".temp .numb").innerText = Math.floor(temp);
         weatherPart.querySelector(".weather").innerText = description;
